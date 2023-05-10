@@ -70,7 +70,7 @@ nemcsütörtök(pentek).
 
 haromnappalelobbvagykesobb(kedd,pentek).
 haromnappalelobbvagykesobb(pentek,kedd).
-haromnappalelobbvagykesobb(hetfo,szerda).
+haromnappalelobbvagykesobb(hetfo,csutortok).
 haromnappalelobbvagykesobb(csutortok,hetfo).
 
 egynappalelobb(A,B):-
@@ -102,27 +102,29 @@ kolcsonzok(mikrobusz).
 kolcsonzok(szemelyauto).
 kolcsonzok(teherauto).
 
-egynappalafurgonosokelott(DN,FN,_):-
-    egynappalelobb(FN,DN).
+mikrobuszvteherauto(teherauto).
+mikrobuszvteherauto(mikrobusz).
 
-
-egynappalafurgonosokelott(DN,_,GN):-
-    egynappalelobb(GN,DN).
+napok(hetfo).
+napok(kedd).
+napok(szerda).
+napok(csutortok).
+napok(pentek).
 
 solve(Megbizas):-
     Megbizas=lista(
-              kiadottMegbizas(gabor,MEGBIZO1,KOLCSONZO1,_),
-              kiadottMegbizas(gabriella,MEGBIZO2,KOLCSONZO2,_),
-              kiadottMegbizas(gerda,MEGBIZO3,KOLCSONZO3,_),
-              kiadottMegbizas(gaspar,MEGBIZO4,KOLCSONZO4,_),
-              kiadottMegbizas(gizella,MEGBIZO5,KOLCSONZO5,_)
+              kiadottMegbizas(gabor,MEGBIZO1,_,NAP1),
+              kiadottMegbizas(gabriella,MEGBIZO2,_,NAP2),
+              kiadottMegbizas(gerda,MEGBIZO3,_,NAP3),
+              kiadottMegbizas(gaspar,MEGBIZO4,_,NAP4),
+              kiadottMegbizas(gizella,MEGBIZO5,_,NAP5)
               ),
    	autokolcsonzo(MA,Megbizas),grafikus(MA,gabor),
     autokolcsonzo(MB,Megbizas),grafikus(MB,gabriella),
     autokolcsonzo(MC,Megbizas),grafikus(MC,gerda),
     autokolcsonzo(MD,Megbizas),grafikus(MD,gaspar),
     autokolcsonzo(ME,Megbizas),grafikus(ME,gizella),
-    
+    /*
     kolcsonzok(KOLCSONZO1),
     kolcsonzok(KOLCSONZO2),
     kolcsonzok(KOLCSONZO3),
@@ -138,7 +140,7 @@ solve(Megbizas):-
     KOLCSONZO3 \= KOLCSONZO4,
     KOLCSONZO3 \= KOLCSONZO5,
     KOLCSONZO4 \= KOLCSONZO5,
-    
+    */
     megbizok(MEGBIZO1),
     megbizok(MEGBIZO2),
     megbizok(MEGBIZO3),
@@ -153,15 +155,23 @@ solve(Megbizas):-
     MEGBIZO2 \= MEGBIZO5,
     MEGBIZO3 \= MEGBIZO4,
     MEGBIZO3 \= MEGBIZO5,
-    MEGBIZO4 \= MEGBIZO5,
-  
-    
-    
-    
-    % Szemelyauto teherauto valami
-    %				Gábor	Gáspár 
-    %	Gréta
-    %						
+    MEGBIZO4 \= MEGBIZO5,  
+    napok(NAP1),
+    napok(NAP2),
+    napok(NAP3),
+    napok(NAP4),
+    napok(NAP5),
+    NAP1 \= NAP2,
+    NAP1 \= NAP3,   
+    NAP1 \= NAP4,  
+    NAP1 \= NAP5,   
+    NAP2 \= NAP3,   
+    NAP2 \= NAP4,   
+    NAP2 \= NAP5, 
+    NAP3 \= NAP4,
+    NAP3 \= NAP5,
+    NAP4 \= NAP5,
+    			
     %1 Gábor (nem ő kapta a Gedeontól a feladatot)a teherautó-kölcsönzéssel foglalkozó cég megbízását egy a
 	%személyautó-kölcsönző megrendelése után, és egy nappal egy masik megrendelés előtt kapta, 
 	%ami szintén nem gedeoné volt.
@@ -178,6 +188,7 @@ solve(Megbizas):-
 	%2 szabály Az a grafikus akit a furgon-kölcsönző bízott meg, vagy három nappal előbb, vagy három nappal később kapta	
 	%a feladatot mint az egyik kollégája, aki nem a gézától kapta a megbízást/Hetfo-csutortok/csutortok-hetfo/kedd-pentek/pentek-kedd/
     %
+    
 	autokolcsonzo(D, Megbizas), kolcsonzo(D,furgon), nap(D,DN), 
 	autokolcsonzo(E,Megbizas), nemgeza(Emegbizo),megbizo(E,Emegbizo),nap(E,EN),haromnappalelobbvagykesobb(DN,EN),
     
@@ -185,17 +196,19 @@ solve(Megbizas):-
 	%3	szabaly Gizella és a Gréta által megbízott művész: aki egy nappal a fugronosok előtt kapta a munkát, és a kamionos-lógót vagy
  	% a személyaitó-kölcsönző megbízását teljesítő tervező, valamilyen sorrendben /csutortok-hetfo/kedd-pentek/pentek-kedd/
     % Gizella 
+
     
-    autokolcsonzo(F,Megbizas),grafikus(F,gizella), kamionosvszemelyautomegbizas(FMegbizas),kolcsonzo(F,FMegbizas),
-    autokolcsonzo(G,Megbizas),megbizo(G,greta),kamionosvszemelyautomegbizas(GMegbizas),kolcsonzo(G,GMegbizas),FMegbizas \= GMegbizas,
-    autokolcsonzo(FF,Megbizas), kolcsonzo(FF,kamion),egynappalelobb(FFN,DN),nap(FF,FFN),
+    autokolcsonzo(F,Megbizas),grafikus(F,gizella), 
+    autokolcsonzo(G,Megbizas),megbizo(G,greta),
+    autokolcsonzo(FF,Megbizas),mikrobuszvteherauto(FFK),kolcsonzo(FF,FFK),egynappalelobb(FFN,DN),nap(FF,FFN),
+    autokolcsonzo(GG,Megbizas),kamionosvszemelyautomegbizas(GGK),kolcsonzo(GG,GGK),nemcsütörtök(GGN),nap(GG,GGN),GGN \= FFN, GGN \= DN, 
     
     %4 szabaly Gizella vagy három nappal korábban vagy három nappal később kapta a megbízást, mint az a grafikus aki ugyanolyan
 	%nemu mint aki a kamionos megbízást kapta 
     
-	%autokolcsonzo(H,Megbizas),grafikus(H,gizella),nap(H,HN),
-	%autokolcsonzo(I,Megbizas),nap(I,IN),grafikus(I,IG), haromnappalelobbvagykesobb(IN,HN),
-	%autokolcsonzo(J,Megbizas),grafikus(J,JG),kolcsonzo(J,kamion),azonosnemu(JG,IG),
+	autokolcsonzo(H,Megbizas),grafikus(H,gizella),nap(H,HN),
+	autokolcsonzo(I,Megbizas),nap(I,IN),grafikus(I,IG), haromnappalelobbvagykesobb(IN,HN),
+	autokolcsonzo(J,Megbizas),grafikus(J,JG),kolcsonzo(J,kamion),azonosnemu(JG,IG),
 	
     
     %5 Az 5 grafikus közül három. Gizella ; akit a furgonkölcsönző álltal megbízott meg és aki csütörtökökön kapta meg
@@ -223,7 +236,6 @@ solve(Megbizas):-
     % A furgonos megbízó Gergely
 	
     autokolcsonzo(R,Megbizas),grafikus(R,gerda),furgonvkamion(Rkolcs) ,kolcsonzo(R,Rkolcs),megbizo(R,gergely).
-
 
 
 
