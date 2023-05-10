@@ -16,6 +16,11 @@ nemfurgon(szemelyauto).
 nemfurgon(teherauto).
 nemfurgon(mikrobusz).
 
+nemteherauto(kamion).
+nemteherauto(szemelyauto).
+nemteherauto(furgon).
+nemteherauto(mikrobusz).
+
 nemgedeon(gergely).
 nemgedeon(geza).
 nemgedeon(greta).
@@ -124,6 +129,7 @@ solve(Megbizas):-
     autokolcsonzo(MC,Megbizas),grafikus(MC,gerda),
     autokolcsonzo(MD,Megbizas),grafikus(MD,gaspar),
     autokolcsonzo(ME,Megbizas),grafikus(ME,gizella),
+    
     /*
     kolcsonzok(KOLCSONZO1),
     kolcsonzok(KOLCSONZO2),
@@ -141,6 +147,7 @@ solve(Megbizas):-
     KOLCSONZO3 \= KOLCSONZO5,
     KOLCSONZO4 \= KOLCSONZO5,
     */
+    
     megbizok(MEGBIZO1),
     megbizok(MEGBIZO2),
     megbizok(MEGBIZO3),
@@ -200,8 +207,8 @@ solve(Megbizas):-
     
     autokolcsonzo(F,Megbizas),grafikus(F,gizella), 
     autokolcsonzo(G,Megbizas),megbizo(G,greta),
-    autokolcsonzo(FF,Megbizas),mikrobuszvteherauto(FFK),kolcsonzo(FF,FFK),egynappalelobb(FFN,DN),nap(FF,FFN),
-    autokolcsonzo(GG,Megbizas),kamionosvszemelyautomegbizas(GGK),kolcsonzo(GG,GGK),nemcsütörtök(GGN),nap(GG,GGN),GGN \= FFN, GGN \= DN, 
+    autokolcsonzo(FF,Megbizas),nemteherauto(FFK),mikrobuszvteherauto(FFK),kolcsonzo(FF,FFK),egynappalelobb(FFN,DN),nap(FF,FFN),
+    autokolcsonzo(GG,Megbizas),kamionosvszemelyautomegbizas(GGK),kolcsonzo(GG,GGK),
     
     %4 szabaly Gizella vagy három nappal korábban vagy három nappal később kapta a megbízást, mint az a grafikus aki ugyanolyan
 	%nemu mint aki a kamionos megbízást kapta 
@@ -235,9 +242,6 @@ solve(Megbizas):-
     % Gerda vagy megkapta a kamionos vagy a furgonos melo
     % A furgonos megbízó Gergely
 	
-    autokolcsonzo(R,Megbizas),grafikus(R,gerda),furgonvkamion(Rkolcs) ,kolcsonzo(R,Rkolcs),megbizo(R,gergely).
-
-
-
-
+    autokolcsonzo(R,Megbizas),grafikus(R,gerda),furgonvkamion(Rkolcs) ,kolcsonzo(R,Rkolcs),megbizo(R,gergely),
+    !.
 
