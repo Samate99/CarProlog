@@ -43,7 +43,7 @@ megold(P) :-
 	%a feladatot mint az egyik kollégája, aki nem a gézától kapta a megbízást/Hetfo-csutortok/csutortok-hetfo/kedd-pentek/pentek-kedd/
     %
     
-	autokolcsonzo(EE,P), EE	\=  F,haromnaposrak(M,EE,WW),
+	autokolcsonzo(EE,P), EE	\=  F,haromnapos(M,EE,WW),
 	
 
 	%3	szabaly Gizella és a Gréta által megbízott művész: aki egy nappal a fugronosok előtt kapta a munkát, és a kamionos-lógót vagy
@@ -63,7 +63,7 @@ megold(P) :-
 	
     E \= N,
     
-    autokolcsonzo(NE,P),neme(N,NE,NW),haromnaposrak(E,NE,WW),
+    autokolcsonzo(NE,P),neme(N,NE,NW),haromnapos(E,NE,WW),
     
 
 	%5 Az 5 grafikus közül három. Gizella ; akit a furgonkölcsönző álltal megbízott meg és aki csütörtökökön kapta meg
@@ -106,10 +106,10 @@ harmasdays(X,Y,Z,napok(X,Y,Z,_,_)).
 harmasdays(X,Y,Z,napok(_,X,Y,Z,_)).
 harmasdays(X,Y,Z,napok(_,_,X,Y,Z)).
 
-haromnaposrak(X,Y,napok(X,_,_,Y,_)).
-haromnaposrak(X,Y,napok(_,Y,_,_,X)).
-haromnaposrak(X,Y,napok(Y,_,_,X,_)).
-haromnaposrak(X,Y,napok(_,X,_,_,Y)).
+haromnapos(X,Y,napok(X,_,_,Y,_)).
+haromnapos(X,Y,napok(_,Y,_,_,X)).
+haromnapos(X,Y,napok(Y,_,_,X,_)).
+haromnapos(X,Y,napok(_,X,_,_,Y)).
 
 
 egymasutanidays(X,Y,napok(X,Y,_,_,_)).
